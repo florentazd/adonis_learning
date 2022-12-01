@@ -1,4 +1,4 @@
-<h1 align="center">Adonis Learning :computeur:</h1>
+<h1 align="center">Adonis Learning :computer:</h1>
 
 <p>Apprentissage du framework AdonisJS</p>
 
