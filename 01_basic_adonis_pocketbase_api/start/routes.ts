@@ -21,8 +21,24 @@
  * DELETE /me
  */
 import Route from '@ioc:Adonis/Core/Route'
+import UsersController from 'App/Controllers/Http/UsersController'
+Route.group(() => {
 
-// Inscription & connexion
-Route.post("/visitors/login", "VisitorsController.login")
-// Connexion d'un utilisateur
-Route.post("/visitors/signup", "VisitorsController.signup")
+  // Inscription & connexion
+  Route.post("/visitors/login", "VisitorsController.login")
+  // Connexion d'un utilisateur
+  Route.post("/visitors/signup", "VisitorsController.signup")
+
+  // Route users
+  Route.get("/users/:id?", async ctx => {
+    // On récupère le nom d'utilisateur dans le corps de ma requête si il existe.
+    const { username } = ctx.request.qs()
+    if (ctx.params.id) return new UsersController().getUserById(ctx)
+    else if (username) return new UsersController().getUserByUsername(ctx, username)
+    else return new UsersController().getUsers(ctx)
+  })
+  Route.delete("/users/me/:userId", "UsersController.deleteMe")
+
+
+  // Gestion des posts
+}).prefix("/api")

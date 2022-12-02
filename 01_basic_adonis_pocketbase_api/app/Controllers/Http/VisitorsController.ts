@@ -32,8 +32,16 @@ export default class VisitorsController {
             try {
                 const authData = await pb_client.collection("users").authWithPassword(payload.identity, payload.password)
 
-                if (authData)
+                if (authData) {
+                    // Set the access_token into cookie
+                    ctx.response.encryptedCookie("access_token", authData.token)
+
+                    // delete the token
+                    delete authData.token
+
+                    // Send account data to the user
                     ctx.response.status(200).send({ authData })
+                }
             } catch {
                 ctx.response.status(401).send("Invalid credentials")
             }
@@ -68,7 +76,7 @@ export default class VisitorsController {
             // A ce niveau les données existe ! On crée dont un payload
             const payload = {
                 name: name,
-                username: username,
+                username: username.toString().toLowerCase(),
                 password: password,
                 passwordConfirm: password,
                 email: email
