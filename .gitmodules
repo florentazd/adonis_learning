@@ -1,0 +1,3 @@
+[submodule "03_basic_crud_api"]
+	path = 03_basic_crud_api
+	url = https://github.com/FlorentAzd/adonis_learning
